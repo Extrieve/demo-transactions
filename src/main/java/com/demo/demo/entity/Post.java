@@ -34,7 +34,7 @@ public class Post {
     @Column(name = "created_at")
     private ZonedDateTime createdAt;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
 }

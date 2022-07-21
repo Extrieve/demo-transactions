@@ -30,7 +30,7 @@ public class Comment {
     @Column(name = "created_at")
     private ZonedDateTime createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private Post post;
 
