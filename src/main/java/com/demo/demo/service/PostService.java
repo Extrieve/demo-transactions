@@ -18,7 +18,6 @@ import java.util.Collection;
 @Slf4j
 public class PostService implements Delegator {
 
-
     private Logger logger = LoggerFactory.getLogger(PostService.class);
 
     @Autowired

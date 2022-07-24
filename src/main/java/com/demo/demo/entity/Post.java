@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -34,7 +35,7 @@ public class Post {
     @Column(name = "created_at")
     private ZonedDateTime createdAt;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Comment> comments;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Collection<Comment> comments;
 
 }
