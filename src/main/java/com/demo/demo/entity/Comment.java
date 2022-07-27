@@ -1,17 +1,18 @@
 package com.demo.demo.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+@ToString
 @Entity
+@Component
 @Table(name = "comment")
 @Builder
 public class Comment {
@@ -19,7 +20,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "comment_id")
-    private Long id;
+    private Long commentId;
 
     @Column(name = "content")
     private String content;
@@ -30,8 +31,9 @@ public class Comment {
     @Column(name = "created_at")
     private ZonedDateTime createdAt;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
+    @ToString.Exclude
     private Post post;
 
 }

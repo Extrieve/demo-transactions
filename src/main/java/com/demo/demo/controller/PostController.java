@@ -5,6 +5,7 @@ import com.demo.demo.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
@@ -25,7 +26,7 @@ public class PostController {
         return postService.getPostById(id);
     }
 
-    @GetMapping("/posts/create")
+    @PostMapping("/posts/create")
     public ResponseEntity<Post> createPost(Post post) {
         return postService.createPost(post);
     }

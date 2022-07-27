@@ -9,9 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class PostServiceTest {
@@ -26,20 +23,21 @@ class PostServiceTest {
     void setUp() {
 
         Comment comment = Comment.builder()
-                .id(1L)
-                .content("test")
+//                .commentId(3L)
+                .content("Freedom fighters was a great book")
                 .build();
 
         Collection<Comment> comments = new ArrayList<Comment>();
         comments.add(comment);
 
         Post post = Post.builder()
+//                .postId(2L)
                 .author("author")
-                .title("title")
-                .id(1L)
+                .title("Freedom Fighters")
+                .content("Content of the post")
+//                .id(1L)
+                .comments(comments)
                 .build();
-
-        post.setComments(comments);
 
         postService.createPost(post);
     }
@@ -47,9 +45,16 @@ class PostServiceTest {
     @Test
     void getAllPosts() {
         Collection<Post> posts = postService.getAllPosts().getBody();
-        Collection<Comment> comments = commentService.getAllComments().getBody();
+//        Collection<Comment> comments = commentService.getAllComments().getBody();
         posts.forEach(System.out::println);
+//        comments.forEach(System.out::println);
+//        assertEquals(1, posts.size());
+    }
+
+    @Test
+    void getAllComments(){
+        Collection<Comment> comments = commentService.getAllComments().getBody();
+
         comments.forEach(System.out::println);
-        assertEquals(1, posts.size());
     }
 }

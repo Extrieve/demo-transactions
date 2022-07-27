@@ -1,6 +1,8 @@
 package com.demo.demo.service;
 
+import com.demo.demo.entity.Comment;
 import com.demo.demo.entity.Post;
+import com.demo.demo.respository.CommentRepository;
 import com.demo.demo.respository.PostRepository;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
@@ -18,11 +20,13 @@ import java.util.Collection;
 @Slf4j
 public class PostService implements Delegator {
 
-    private Logger logger = LoggerFactory.getLogger(PostService.class);
+    private final Logger logger = LoggerFactory.getLogger(PostService.class);
 
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private CommentRepository commentRepository;
 
     public ResponseEntity<Collection<Post>> getAllPosts() {
         return ResponseEntity.ok(postRepository.findAll());
@@ -30,16 +34,23 @@ public class PostService implements Delegator {
 
     public ResponseEntity<Post> getPostById(Long id) {
 
-        try {
-            Post payload = postRepository.getById(id);
-            return ResponseEntity.ok(postRepository.getById(id));
-        } catch(RuntimeException e){
-            logger.error("Error: " + e.getMessage());
-            return ResponseEntity.badRequest().body(Post.builder().build());
-        }
+        Post payload = postRepository.getById(id);
+
+        return ResponseEntity.ok().body(payload);
     }
 
     public ResponseEntity<Post> createPost(Post post) {
-        return ResponseEntity.ok(postRepository.save(post));
+
+        Long postId = postRepository.save(post).getPostId();
+
+        Collection<Comment> comments = post.getComments();
+
+        comments.forEach(comment -> {
+            comment.setPost(post);
+        });
+
+        commentRepository.saveAll(comments);
+
+        return ResponseEntity.ok().body(post);
     }
 }
