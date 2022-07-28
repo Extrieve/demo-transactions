@@ -42,9 +42,21 @@ public class Post {
 //    @ToString.Include
 //    @JsonInclude
     @OneToMany(mappedBy = "post",
-            cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
-            orphanRemoval = true,
-            fetch = FetchType.EAGER)
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+//            fetch = FetchType.EAGER
+    )
+    @ToString.Exclude
     private Collection<Comment> comments = new ArrayList<>();
+
+    public void addComment(Comment comment){
+        comments.add(comment);
+        comment.setPost(this);
+    }
+
+    public void removeComment(Comment comment){
+        comments.remove(comment);
+        comment.setPost(null);
+    }
 
 }

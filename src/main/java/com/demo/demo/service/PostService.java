@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
@@ -45,9 +46,11 @@ public class PostService implements Delegator {
         System.out.println(post);
 
         Collection<Comment> comments = post.getComments();
-//        post.getComments().forEach(comment -> comment.setPost(post));
+        post.getComments().forEach(comment -> comment.setPost(post));
+        post.setComments(comments);
         comments.forEach(System.out::println);
-//        post.setComments(null);
+//        post.setComments(new ArrayList<>());
+//        comments.forEach(post::addComment);
         postRepository.save(post);
 
 //        comments.forEach(comment -> {

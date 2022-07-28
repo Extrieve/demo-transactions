@@ -1,6 +1,7 @@
 package com.demo.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
@@ -34,8 +35,13 @@ public class Comment {
 
 //    @ToString.Include
 //    @JsonBackReference
-    @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "post_id")
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 
 }
