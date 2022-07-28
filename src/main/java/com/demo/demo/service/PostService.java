@@ -45,19 +45,11 @@ public class PostService implements Delegator {
         logger.info("Saving post with id: " + post.getPostId());
         System.out.println(post);
 
-        Collection<Comment> comments = post.getComments();
+        // Reference each comment to the post
         post.getComments().forEach(comment -> comment.setPost(post));
-        post.setComments(comments);
-        comments.forEach(System.out::println);
-//        post.setComments(new ArrayList<>());
-//        comments.forEach(post::addComment);
-        postRepository.save(post);
 
-//        comments.forEach(comment -> {
-//            comment.setPost(post);
-//        });
-//
-//        commentRepository.saveAll(comments);
+        // Save both entities through the transactional management
+        postRepository.save(post);
 
         return ResponseEntity.ok().body(post);
     }
