@@ -1,5 +1,7 @@
 package com.demo.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
@@ -36,8 +38,13 @@ public class Post {
     @Column(name = "created_at")
     private ZonedDateTime createdAt;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @ToString.Include
+//    @JsonManagedReference
+//    @ToString.Include
+//    @JsonInclude
+    @OneToMany(mappedBy = "post",
+            cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
+            orphanRemoval = true,
+            fetch = FetchType.EAGER)
     private Collection<Comment> comments = new ArrayList<>();
 
 }

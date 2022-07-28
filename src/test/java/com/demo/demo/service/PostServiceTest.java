@@ -24,7 +24,7 @@ class PostServiceTest {
 
         Comment comment = Comment.builder()
 //                .commentId(3L)
-                .content("Freedom fighters was a great book")
+                .content("Michael Malice is great")
                 .build();
 
         Collection<Comment> comments = new ArrayList<Comment>();
@@ -32,9 +32,9 @@ class PostServiceTest {
 
         Post post = Post.builder()
 //                .postId(2L)
-                .author("author")
-                .title("Freedom Fighters")
-                .content("Content of the post")
+                .author("Michael Malice")
+                .title("The White Pill")
+                .content("Anarchist btw")
 //                .id(1L)
                 .comments(comments)
                 .build();
@@ -44,17 +44,14 @@ class PostServiceTest {
 
     @Test
     void getAllPosts() {
-        Collection<Post> posts = postService.getAllPosts().getBody();
+        postService.getAllPosts().getBody().forEach(System.out::println);
 //        Collection<Comment> comments = commentService.getAllComments().getBody();
-        posts.forEach(System.out::println);
 //        comments.forEach(System.out::println);
 //        assertEquals(1, posts.size());
     }
 
     @Test
     void getAllComments(){
-        Collection<Comment> comments = commentService.getAllComments().getBody();
-
-        comments.forEach(System.out::println);
+        commentService.getAllComments().getBody().forEach(System.out::println);
     }
 }

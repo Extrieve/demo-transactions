@@ -1,5 +1,6 @@
 package com.demo.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
@@ -31,9 +32,10 @@ public class Comment {
     @Column(name = "created_at")
     private ZonedDateTime createdAt;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+//    @ToString.Include
+//    @JsonBackReference
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "post_id")
-    @ToString.Exclude
     private Post post;
 
 }
