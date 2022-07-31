@@ -29,6 +29,9 @@ public class PostService implements Delegator {
     @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    private EmailSenderService emailSenderService;
+
     public ResponseEntity<Collection<Post>> getAllPosts() {
         return ResponseEntity.ok(postRepository.findAll());
     }
@@ -50,6 +53,10 @@ public class PostService implements Delegator {
 
         // Save both entities through the transactional management
         postRepository.save(post);
+
+        // Testing email sender service
+        emailSenderService.sendSimpleEmail("nicolas.cinera@gmail.com", "SPRING BOOT TEST",
+                post.toString());
 
         return ResponseEntity.ok().body(post);
     }
